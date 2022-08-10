@@ -1,0 +1,15 @@
+training_episodes: 500
+test:episodes: 30
+render: False
+learning_rate: 0.003
+discount_factor: 0.99
+eps: 1.0
+eps_dec: 0.0001
+eps_min: 0.01
+batch_size: 64
+replace_target_network_cntr: 100
+fc1_dims: 256
+fc2_dims: 256
+use_target_network: True
+mem_size: 100000
+env_name: "CartPole-v1"
