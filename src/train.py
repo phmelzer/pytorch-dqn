@@ -7,22 +7,19 @@ import logging.config
 import numpy as np
 from agent import DQNAgent
 import utils
-import time
 
 config = utils.load_config("../config/config.yaml")
 logging_config = utils.load_logging_config("../config/logging.yaml")
 
-env = gym.make(config["env_name"])
-print(str(env))
-agent = DQNAgent(input_dims=env.observation_space.shape, n_actions=env.action_space.n, lr=config["learning_rate"],
-                 discount_factor=config["discount_factor"], eps=config["eps"], eps_dec=config["eps_dec"],
-                 eps_min=config["eps_min"], batch_size=config["batch_size"],
-                 replace=config["replace_target_network_cntr"], use_target_network=config["use_target_network"],
-                 mem_size=config["mem_size"], algo="dqn", env_name=config["env_name"])
-
 
 def train():
-    training_time = time.strftime('%Y_%m_%d_%H_%M', time.localtime())
+    env = gym.make(config["env_name"])
+    agent = DQNAgent(input_dims=env.observation_space.shape, n_actions=env.action_space.n, lr=config["learning_rate"],
+                     discount_factor=config["discount_factor"], eps=config["eps"], eps_dec=config["eps_dec"],
+                     eps_min=config["eps_min"], batch_size=config["batch_size"],
+                     replace=config["replace_target_network_cntr"], use_target_network=config["use_target_network"],
+                     mem_size=config["mem_size"], algo="dqn", env_name=config["env_name"])
+
     # lists for storing data
     episode_list = []
     score_list = []
@@ -59,17 +56,17 @@ def train():
                                                                                                 "%.2f" % best_score,
                                                                                                 "%.2f" % agent.eps))
     # save policy and target network
-    agent.save_models(training_time)
+    agent.save_models()
     logger.info("Save models")
 
     logger.info("Finish training")
 
     # plot simple learning curve
-    utils.plot_learning_curve(score_list, avg_score_list, config["env_name"], training_time)
+    utils.plot_learning_curve(score_list, avg_score_list, config["env_name"])
 
     # store training data and config to csv file
-    utils.store_training_data(episode_list, score_list, avg_score_list, epsilon_list, config["env_name"], training_time)
-    utils.store_training_config(config, config["env_name"], training_time)
+    utils.store_training_data(episode_list, score_list, avg_score_list, epsilon_list, config["env_name"])
+    utils.store_training_config(config, config["env_name"])
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ class DeepQNetwork(nn.Module):
         self.fc3 = nn.Linear(self.fc2_dims, n_actions)
         self.optimizer = optim.RMSprop(self.parameters(), lr=lr)
         self.loss = nn.MSELoss()
-        self.device = T.device('cpu')
+        self.device = T.device('cuda:0' if T.cuda.is_available() else 'cpu')
         self.to(self.device)
 
     def forward(self, state):
@@ -29,8 +29,8 @@ class DeepQNetwork(nn.Module):
 
         return actions
 
-    def save_checkpoint(self, training_time):
-        T.save(self.state_dict(), self.checkpoint_file+"_"+training_time)
+    def save_checkpoint(self):
+        T.save(self.state_dict(), self.checkpoint_file)
 
-    def load_checkpoint(self, training_time):
-        self.load_state_dict(T.load(self.checkpoint_file+"_"+training_time))
+    def load_checkpoint(self):
+        self.load_state_dict(T.load(self.checkpoint_file))

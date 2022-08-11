@@ -5,7 +5,7 @@ import yaml
 import os
 
 
-def plot_learning_curve(score_list, avg_score_list, env, start_time):
+def plot_learning_curve(score_list, avg_score_list, env):
     plt.figure(figsize=(12, 8))
     plt.plot(np.array(score_list), label="Score")
     plt.plot(np.array(avg_score_list), label="Average Score")
@@ -14,19 +14,19 @@ def plot_learning_curve(score_list, avg_score_list, env, start_time):
     plt.grid(axis="both")
     plt.legend(loc="lower right")
     plt.title('Learning Curve')
-    plt.savefig('../plots/{}_dqn_learning_curve_{}.png'.format(env, start_time))
+    plt.savefig('../plots/{}_dqn_learning_curve.png'.format(env))
     plt.close()
 
 
-def store_training_data(episodes, scores, avg_scores, epsilons, env, start_time):
+def store_training_data(episodes, scores, avg_scores, epsilons, env):
     training_data_dict = {"episode": episodes, "score": scores, "avg_score": avg_scores, "epsilon": epsilons}
     df = pd.DataFrame(training_data_dict)
-    df.to_csv("../data/training/{}_dqn_training_data_{}.csv".format(env, start_time))
+    df.to_csv("../data/training/{}_dqn_training_data.csv".format(env))
 
 
-def store_training_config(config, env, start_time):
+def store_training_config(config, env):
     df = pd.DataFrame(config, index=[0])
-    df.to_csv("../data/training/{}_dqn_training_config_{}.csv".format(env, start_time))
+    df.to_csv("../data/training/{}_dqn_training_config.csv".format(env))
 
 
 def load_config(config_name):

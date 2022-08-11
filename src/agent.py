@@ -136,10 +136,10 @@ class DQNAgent:
 
         return loss
 
-    def save_models(self, training_time):
-        self.q_policy.save_checkpoint(training_time)
-        self.q_target.save_checkpoint(training_time)
+    def save_models(self):
+        self.q_policy.save_checkpoint()
+        self.q_target.save_checkpoint()
 
-    def load_models(self, training_time):
-        self.q_policy.load_checkpoint(training_time)
-        self.q_target.load_checkpoint(training_time)
+    def load_models(self):
+        self.q_policy.load_checkpoint()
+        self.q_target.load_checkpoint()
