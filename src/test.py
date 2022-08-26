@@ -37,9 +37,9 @@ def test():
         done = False
         score = 0
         observation = env.reset()
-        if config["render"]:
-            env.render()
         while not done:
+            if config["render"]:
+                env.render()
             action = agent.choose_action(observation)
             observation_, reward, done, info = env.step(action)
             score += reward
